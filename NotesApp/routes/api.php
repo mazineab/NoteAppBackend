@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,3 +19,6 @@ Route::post("/logout",[UserController::class,"logout"])->middleware("auth:sanctu
 //create note
 Route::post("/createCategory",[CategoryController::class,"createCategory"])->middleware("auth:sanctum");
 
+Route::post("/createNote",[NoteController::class,"createNote"])->middleware("auth:sanctum");
+Route::get("/getCategories",[CategoryController::class,"getCategories"])->middleware("auth:sanctum");
+Route::get("/getNotes",[NoteController::class,"getNotes"])->middleware("auth:sanctum");

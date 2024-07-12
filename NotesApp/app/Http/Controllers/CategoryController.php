@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Exception;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,4 +29,19 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category creation failed', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function getCategories(){
+        try{
+            $categories=Category::where("user_id",auth()->user()->id)->get();
+            return $categories;
+        }
+        catch(Exception $e){
+            return Response()->json([
+                "status"=>false,
+                "message"=>"faild load categories",
+                "error"=>$e->getMessage()
+            ]);
+        }
+    }
 }
+

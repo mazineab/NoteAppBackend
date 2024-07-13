@@ -43,5 +43,31 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function deleteCategory($id){
+        try{
+            $hasCat=Category::where('id',$id)
+                            ->where('user_id',auth()->user()->id)
+                            ->first();
+            if(!$hasCat){
+                return Response()->json([
+                    'status'=>false,
+                    'message'=>'user not has this category'
+                ]);
+            }
+            $categoory=Category::findOrFail($id);
+            $categoory->delete();
+            return Response()->json([
+                'status'=>true,
+                'message'=>"Category deleted successfully"
+            ]);
+        }
+        catch(Exception $e){
+            return Response()->json([
+                'status'=>false,
+                "error"=>$e->getMessage()
+            ]);
+        }
+    }
 }
 

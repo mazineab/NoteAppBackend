@@ -17,7 +17,6 @@ class UserController extends Controller
                 "phoneNumber"=>"required",
                 "password"=>"required|string|min:8"
             ]);
-            // DB::beginTransaction();
             $user=User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
@@ -25,7 +24,6 @@ class UserController extends Controller
                 'password'=>bcrypt($request->password),
 
             ]);
-            // DB::commit();
             return response()->json(['user'=>$user],201);
         }
         catch (\Exception $e) {
@@ -68,6 +66,10 @@ class UserController extends Controller
             "message"=>"Logout successful",
            ],200) ;
         }
+    }
+
+    public function getUser(Request $request){
+        return $request->user();
     }
 
     

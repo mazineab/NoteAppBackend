@@ -24,3 +24,4 @@ Route::delete("/category/{id}",[CategoryController::class,"deleteCategory"])->mi
 Route::post("/createNote",[NoteController::class,"createNote"])->middleware("auth:sanctum");
 Route::get("/getNotes",[NoteController::class,"getNotes"])->middleware("auth:sanctum");
 Route::delete("/note/{id}",[NoteController::class,"deleteNote"])->middleware("auth:sanctum");
+Route::put('/notes/{id}', [NoteController::class, 'editNote'])->middleware("auth:sanctum");

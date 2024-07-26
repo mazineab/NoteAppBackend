@@ -97,4 +97,39 @@ class NoteController extends Controller
             ]);
         }
     }
+
+    public function editNote(Request $request){
+
+        try{
+            $request->validate([
+                'note_id'=>"required",
+                ''
+            ]);
+            $note=Note::findOrFail($id);
+            $category=Category::where('id',$note->category_id)
+                              ->where('user_id',auth()->user()->id)
+                              ->first();
+            if(!$category){
+                return Response()->json([
+                    'status'=>false,
+                    'error'=>"you don't has this note"
+                ],403);
+            }
+            $note->update([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'category_id' => $request->input('category_id')
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Note edit successfully',
+            ], 200);
+
+        }catch(Exception $e){
+            return Response()->json([
+                'status'=>false,
+                'error'=>$e->getMessage(),
+            ]);
+        }
+    }
 }

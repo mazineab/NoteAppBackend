@@ -99,13 +99,13 @@ class NoteController extends Controller
     }
 
     public function editNote(Request $request){
-
         try{
             $request->validate([
-                'note_id'=>"required",
-                ''
+                'id'=>"required",
+                'name'=>"required",
+                "content"=>"required",
             ]);
-            $note=Note::findOrFail($id);
+            $note=Note::findOrFail($request->id);
             $category=Category::where('id',$note->category_id)
                               ->where('user_id',auth()->user()->id)
                               ->first();
@@ -116,9 +116,8 @@ class NoteController extends Controller
                 ],403);
             }
             $note->update([
-                'title' => $request->input('title'),
+                'name' => $request->input('name'),
                 'content' => $request->input('content'),
-                'category_id' => $request->input('category_id')
             ]);
             return response()->json([
                 'status' => true,
